@@ -17,7 +17,7 @@ old_ip="$5"
 #新的ip（当前ip）
 new_ip="$6"
 
-. "${BASE_PWD}/AliyunDDNS.env"
+. "${BASE_PWD}/PorkbunDDNS.env"
 . "${BASE_PWD}/lib/common.sh"
 
 lib_check_parm p_sample_var

@@ -11,7 +11,7 @@ new_ip="$6"
 
 API_URL="https://qyapi.weixin.qq.com"
 
-. "${BASE_PWD}/AliyunDDNS.env"
+. "${BASE_PWD}/PorkbunDDNS.env"
 . "${BASE_PWD}/lib/common.sh"
 
 lib_check_parm "p_work_weixin_corpid"
@@ -34,14 +34,14 @@ fi
 
 #通常来说，更换IP的次数并不频繁，更换一次IP的时间通常会超过token失效时间，所以这里缓存token的时长意义并不大
 respon=$(lib_curl "$API_URL/cgi-bin/gettoken?corpid=${p_work_weixin_corpid}&corpsecret=${p_work_weixin_corpsecret}")
-if [ "$(lib_json_value "$respon" "errmsg" "string")" != "ok" ]; then
+if [ "$(echo "$respon" | jq '.errmsg')" != "\"ok\"" ]; then
     echo "get access token failed, please check config."
     echo "$respon"
     exit 1
 fi
-access_token="$(lib_json_value "$respon" "access_token" "string")"
+access_token="$(echo "$respon" | jq '.access_token' sed 's/"//g')"
 respon=$(lib_curl -d "$post" -X "POST" "$API_URL/cgi-bin/message/send?access_token=${access_token}")
-if [ "$(lib_json_value "$respon" "errmsg" "string")" != "ok" ]; then
+if [ "$(echo "$respon" | jq '.errmsg')" != "\"ok\"" ]; then
     echo "send message failed."
     echo "$respon"
     exit 1

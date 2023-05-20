@@ -109,7 +109,7 @@ __exec_plugins() {
         local plugin_base_name="$(basename "$plugin_file")"
         local plugin_name=${plugin_base_name%%.*}
         if eval [ \"\$"p_${plugin_name}_enable"\" = \"1\" ]; then
-            "$plugin_file" "$@"
+            "$plugin_file" "$@" || true
         fi
     done
 }
