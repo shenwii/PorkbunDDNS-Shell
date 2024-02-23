@@ -8,6 +8,7 @@ COPY PorkbunDDNS.sh /opt/PorkbunDDNS-Shell/
 RUN echo "* * * * * /opt/PorkbunDDNS-Shell/PorkbunDDNS.sh" >>/etc/cron.d/crontab
 RUN /usr/bin/crontab /etc/cron.d/crontab
 
+ENV CONTAINER_RUNNING "1"
 ENV ip_api_url "https://api64.ipify.org?format=text"
 ENV access_key_id "your-access-key-id"
 ENV access_key_secret "your-access-key-secret"

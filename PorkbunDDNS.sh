@@ -114,7 +114,9 @@ __exec_plugins() {
     done
 }
 
-. "${BASE_PWD}/PorkbunDDNS.env"
+if ! [ "$CONTAINER_RUNNING" = "1" ]; then
+    . "${BASE_PWD}/PorkbunDDNS.env"
+fi
 . "${BASE_PWD}/lib/common.sh"
 
 __check_tool "curl"
