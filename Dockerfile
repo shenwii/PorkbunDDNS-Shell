@@ -1,12 +1,11 @@
 FROM docker.io/debian:stable-slim
 
-RUN apt update && apt -y install curl jq cron && apt clean
+RUN apt update && apt -y install curl jq && apt clean
 RUN mkdir /opt/PorkbunDDNS-Shell
 COPY lib /opt/PorkbunDDNS-Shell/lib
 COPY plugins /opt/PorkbunDDNS-Shell/plugins
 COPY PorkbunDDNS.sh /opt/PorkbunDDNS-Shell/
-RUN echo "* * * * * /opt/PorkbunDDNS-Shell/PorkbunDDNS.sh" >>/etc/cron.d/crontab
-RUN /usr/bin/crontab /etc/cron.d/crontab
+COPY PorkbunDDNSService.sh /opt/PorkbunDDNS-Shell/
 
 ENV CONTAINER_RUNNING "1"
 ENV ip_api_url "https://api64.ipify.org?format=text"
@@ -32,4 +31,4 @@ ENV p_telegram_chatid ""
 ENV p_telegram_content_update "\$host_record.\$domain_name ip has updated, \$old_ip -> \$new_ip"
 ENV p_telegram_content_create "\$host_record.\$domain_name ip has created, ip is \$new_ip"
 
-CMD ["cron", "-f"]
+CMD ["/opt/PorkbunDDNS-Shell/PorkbunDDNSService.sh"]
