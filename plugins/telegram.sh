@@ -11,7 +11,9 @@ new_ip="$6"
 
 API_URL="https://api.telegram.org"
 
-. "${BASE_PWD}/PorkbunDDNS.env"
+if ! [ "$CONTAINER_RUNNING" = "1" ]; then
+    . "${BASE_PWD}/PorkbunDDNS.env"
+fi
 . "${BASE_PWD}/lib/common.sh"
 
 lib_check_parm "p_telegram_botid"
