@@ -3,7 +3,7 @@
 set -e
 
 export BASE_PWD="$(dirname "$0")"
-API_URL="https://porkbun.com/api/json/v3"
+API_URL="https://api.porkbun.com/api/json/v3"
 
 __check_tool() {
     local tool="$1"
